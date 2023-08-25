@@ -3,11 +3,22 @@ window.promises = [];
 // Do not change the code above this
 // add your promises to the array `promises`
 
-for (let index = 0; index < 5; index++) {
-	window.promises.push(new Promise((resolve) => {
-		setTimeout(() => {
-			document.querySelector("div").textContent = "Something";
-			resolve(true)
-		}, Math.floor(Math.random() * 5))
-	}))
+function getRandomTime() {
+  return Math.floor(Math.random() * 5000) + 1000; // Between 1000ms and 5000ms
 }
+
+const promises = Array.from({ length: 5 }, () =>
+  new Promise((resolve) => setTimeout(resolve, getRandomTime()))
+);
+
+window.promises.push(...promises)
+
+Promise.any(promises)
+  .then((result) => {
+    // Print the result to the output div.
+    const outputDiv = document.getElementById("output");
+    outputDiv.textContent = `First resolved result: ${result}`;
+  })
+  .catch((error) => {
+    console.error("All promises failed:", error);
+  });
