@@ -8,7 +8,10 @@ function getRandomTime() {
 }
 
 const promises = Array.from({ length: 5 }, () =>
-  new Promise((resolve) => setTimeout(resolve, getRandomTime()))
+	{
+		let t =  getRandomTime();
+		new Promise((resolve) => setTimeout(resolve, t,t))
+	}
 );
 
 window.promises.push(...promises)
